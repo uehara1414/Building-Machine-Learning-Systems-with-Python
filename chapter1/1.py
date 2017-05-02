@@ -15,22 +15,14 @@ def main():
     x = x[~sp.isnan(y)]
     y = y[~sp.isnan(y)]
 
-    fp1, residuals, rank, sv, rcond = sp.polyfit(x, y, 1, full=True)
-    f1 = sp.poly1d(fp1)
+    for i in range(1, 6):
+        fp = sp.polyfit(x, y, i)
+        f = sp.poly1d(fp)
+        print(f'{i} error', error(f, x, y))
 
-    f2p = sp.polyfit(x, y, 2)
-    f2 = sp.poly1d(f2p)
-
-    print('f1 error', error(f1, x, y))
-    print('f2 error', error(f2, x, y))
-
-    fx = sp.linspace(0, x[-1], 1000)
-    plt.plot(fx, f1(fx), linewidth=4)
-    plt.legend([f"d={f1.order}"], loc='upper left')
-
-    fx2 = sp.linspace(0, x[-1], 1000)
-    plt.plot(fx2, f2(fx2), linewidth=4)
-    plt.legend([f"d={f2.order}"], loc='upper left')
+        fx = sp.linspace(0, x[-1], 1000)
+        plt.plot(fx, f(fx), linewidth=2)
+        plt.legend([f"d={f.order}"], loc='upper left')
 
     plt.scatter(x, y)
     plt.title('Web traffic over the world')
