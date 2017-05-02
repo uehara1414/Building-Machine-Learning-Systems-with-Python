@@ -15,7 +15,7 @@ def main():
     x = x[~sp.isnan(y)]
     y = y[~sp.isnan(y)]
 
-    for i in range(1, 6):
+    for i in [1, 2, 3, 10, 100]:
         fp = sp.polyfit(x, y, i)
         f = sp.poly1d(fp)
         print(f'{i} error', error(f, x, y))
