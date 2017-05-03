@@ -24,6 +24,20 @@ def main():
         plt.plot(fx, f(fx), linewidth=2)
         plt.legend([f"d={f.order}"], loc='upper left')
 
+    inflection = int(3.5 * 7 * 24)
+    xa = x[:inflection]
+    ya = y[:inflection]
+    xb = x[inflection:]
+    yb = y[inflection:]
+    fa = sp.poly1d(sp.polyfit(xa, ya, 1))
+    fb = sp.poly1d(sp.polyfit(xb, yb, 1))
+
+    fa_error = error(fa, xa, ya)
+    fb_error = error(fb, xb, yb)
+    print(f'Error inflection={fa_error+fb_error}')
+    plt.plot(xa, fa(xa), linewidth=2)
+    plt.plot(xb, fb(xb), linewidth=2)
+
     plt.scatter(x, y)
     plt.title('Web traffic over the world')
     plt.xlabel('Time')
